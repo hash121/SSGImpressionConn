@@ -50,7 +50,7 @@ namespace SSGImpressionConn.Web.Controllers
                 appointmentDetail.AppointmentTime  = TimeSpan.Zero;
                 var time = db.TimeSlots.FirstOrDefault(x => x.ID == appointmentDetail.TimeSlotID).Time;
                 var barber = db.BarberDetails.FirstOrDefault(x => x.ID == appointmentDetail.BarberDetailID).Name;
-                var shop = db.ShopDetails.FirstOrDefault(x => x.ID == appointmentDetail.ShopDetailID).State;
+                var shop = db.ShopDetails.FirstOrDefault(x => x.ID == appointmentDetail.ShopDetailID) == null ? "": db.ShopDetails.FirstOrDefault(x => x.ID == appointmentDetail.ShopDetailID).State;
 
                 
                 Color mycolor = ColorTranslator.FromHtml("Red");
