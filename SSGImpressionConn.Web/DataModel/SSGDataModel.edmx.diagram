@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d3c316e7fbc94361b715729875ae4274" Name="Diagram1">
+        <EntityTypeShape EntityType="SSGDataConnModel.BarberDetail" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSGDataConnModel.BarberType" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SSGDataConnModel.ServiceDetail" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="SSGDataConnModel.FK_BarberDetail_BarberType" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SSGDataConnModel.Status" Width="1.5" PointX="0.75" PointY="8.875" />
+        <EntityTypeShape EntityType="SSGDataConnModel.ShopDetail" Width="1.5" PointX="3.75" PointY="4.375" />
+        <AssociationConnector Association="SSGDataConnModel.FK_BarberDetail_ShopDetail" />
+        <EntityTypeShape EntityType="SSGDataConnModel.TimeSlot" Width="1.5" PointX="6.375" PointY="0.875" />
+        <EntityTypeShape EntityType="SSGDataConnModel.AppointmentDetail" Width="1.5" PointX="17.25" PointY="3" />
+        <AssociationConnector Association="SSGDataConnModel.FK_AppointmentDetails_BarberDetail" />
+        <AssociationConnector Association="SSGDataConnModel.FK_AppointmentDetails_ServiceDetail" />
+        <AssociationConnector Association="SSGDataConnModel.FK_AppointmentDetails_ShopDetail" />
+        <AssociationConnector Association="SSGDataConnModel.FK_AppointmentDetails_Status" />
+        <AssociationConnector Association="SSGDataConnModel.FK_AppointmentDetails_TimeSlot" />
+        <EntityTypeShape EntityType="SSGDataConnModel.AppointService" Width="1.5" PointX="19.5" PointY="4.75" />
+        <AssociationConnector Association="SSGDataConnModel.FK_AppointmentDetails_AppointService" />
+        <AssociationConnector Association="SSGDataConnModel.FK_AppointService_AppointmentDetails" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

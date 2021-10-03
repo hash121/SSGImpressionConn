@@ -1,0 +1,162 @@
+﻿@model IEnumerable<SSGImpressionConn.Web.DataModel.AppointmentDetail>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- jQuery -->
+
+<!-- Timepicker Js -->
+<script src="~/js/wickedpicker.js"></script>
+<!-- Timepicker CSS -->
+<link rel="stylesheet" href="dist/wickedpicker.min.css">
+
+
+<style>
+    #appointment {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #appointment td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #appointment tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #appointment tr:hover {
+            background-color: #ddd;
+        }
+
+        #appointment th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    #datep {
+        display: none;
+    }
+
+    .ui-datepicker-calendar tbody td > a.hover-calendar-cell {
+        border: 1px solid #074e91;
+        background: #5bacf7 url(images/ui-bg_glass_15_5bacf7_1x400.png) 50% 50% repeat-x;
+        font-weight: normal;
+        color: #1a1a1a;
+    }
+
+    #addon {
+        background-color: #999;
+        width: 100%
+    }
+</style>
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table id="appointment" class="table table-bordered table-hover table-dark">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AppointmentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AppointmentDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AppointmentTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BarberDetail.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceDetail.ServiceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShopDetail.ShopName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status.Status1)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BarberDetail.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceDetail.ServiceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopDetail.ShopName)
+            </td>
+            <td>
+                <select>
+                    @foreach (var data in ViewBag.Status)
+                    {
+                        <option>@data.Status1</option>
+                    }
+                </select>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+<input type="text" id="timepicker-12-hr" name="timepicker-12-hr" class="timepicker-12-hr">
+
+<script>
+    $(document).ready(function () {
+
+        $('.timepicker-12-hr').wickedpicker();
+
+    });
+</script>

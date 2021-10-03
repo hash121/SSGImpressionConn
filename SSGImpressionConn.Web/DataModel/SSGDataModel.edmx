@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SSGDataConnModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppointmentDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppointmentID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
+          <Property Name="Phone" Type="int" Nullable="false" />
+          <Property Name="BarberDetailID" Type="int" />
+          <Property Name="ShopDetailID" Type="int" />
+          <Property Name="ServiceDetailID" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="200" />
+          <Property Name="AppointmentTime" Type="time" Precision="7" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="TimeSlotID" Type="int" />
+          <Property Name="SlotStatus" Type="bit" />
+          <Property Name="AppointTime" Type="int" />
+          <Property Name="AppointServiceID" Type="int" />
+        </EntityType>
+        <EntityType Name="AppointService">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppoinmentID" Type="int" />
+          <Property Name="ApointServiceIDs" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="BarberDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Phone" Type="int" Nullable="false" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="BarberTypeID" Type="int" />
+          <Property Name="ShopDetailID" Type="int" />
+        </EntityType>
+        <EntityType Name="BarberType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BarberType" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShopDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShopName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ZipCode" Type="int" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeSlot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Time" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AppointmentDetails_AppointService">
+          <End Role="AppointService" Type="Self.AppointService" Multiplicity="0..1" />
+          <End Role="AppointmentDetails" Type="Self.AppointmentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetails">
+              <PropertyRef Name="AppointServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_BarberDetail">
+          <End Role="BarberDetail" Type="Self.BarberDetail" Multiplicity="0..1" />
+          <End Role="AppointmentDetails" Type="Self.AppointmentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BarberDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetails">
+              <PropertyRef Name="BarberDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_ServiceDetail">
+          <End Role="ServiceDetail" Type="Self.ServiceDetail" Multiplicity="0..1" />
+          <End Role="AppointmentDetails" Type="Self.AppointmentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetails">
+              <PropertyRef Name="ServiceDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_ShopDetail">
+          <End Role="ShopDetail" Type="Self.ShopDetail" Multiplicity="0..1" />
+          <End Role="AppointmentDetails" Type="Self.AppointmentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShopDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetails">
+              <PropertyRef Name="ShopDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="AppointmentDetails" Type="Self.AppointmentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetails">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_TimeSlot">
+          <End Role="TimeSlot" Type="Self.TimeSlot" Multiplicity="0..1" />
+          <End Role="AppointmentDetails" Type="Self.AppointmentDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSlot">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetails">
+              <PropertyRef Name="TimeSlotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointService_AppointmentDetails">
+          <End Role="AppointmentDetails" Type="Self.AppointmentDetails" Multiplicity="0..1" />
+          <End Role="AppointService" Type="Self.AppointService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointmentDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointService">
+              <PropertyRef Name="AppoinmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BarberDetail_BarberType">
+          <End Role="BarberType" Type="Self.BarberType" Multiplicity="0..1" />
+          <End Role="BarberDetail" Type="Self.BarberDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BarberType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BarberDetail">
+              <PropertyRef Name="BarberTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BarberDetail_ShopDetail">
+          <End Role="ShopDetail" Type="Self.ShopDetail" Multiplicity="0..1" />
+          <End Role="BarberDetail" Type="Self.BarberDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShopDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BarberDetail">
+              <PropertyRef Name="ShopDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SSGDataConnModelStoreContainer">
+          <EntitySet Name="AppointmentDetails" EntityType="Self.AppointmentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AppointService" EntityType="Self.AppointService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BarberDetail" EntityType="Self.BarberDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BarberType" EntityType="Self.BarberType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceDetail" EntityType="Self.ServiceDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShopDetail" EntityType="Self.ShopDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeSlot" EntityType="Self.TimeSlot" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AppointmentDetails_AppointService" Association="Self.FK_AppointmentDetails_AppointService">
+            <End Role="AppointService" EntitySet="AppointService" />
+            <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_BarberDetail" Association="Self.FK_AppointmentDetails_BarberDetail">
+            <End Role="BarberDetail" EntitySet="BarberDetail" />
+            <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_ServiceDetail" Association="Self.FK_AppointmentDetails_ServiceDetail">
+            <End Role="ServiceDetail" EntitySet="ServiceDetail" />
+            <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_ShopDetail" Association="Self.FK_AppointmentDetails_ShopDetail">
+            <End Role="ShopDetail" EntitySet="ShopDetail" />
+            <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_Status" Association="Self.FK_AppointmentDetails_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_TimeSlot" Association="Self.FK_AppointmentDetails_TimeSlot">
+            <End Role="TimeSlot" EntitySet="TimeSlot" />
+            <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointService_AppointmentDetails" Association="Self.FK_AppointService_AppointmentDetails">
+            <End Role="AppointmentDetails" EntitySet="AppointmentDetails" />
+            <End Role="AppointService" EntitySet="AppointService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BarberDetail_BarberType" Association="Self.FK_BarberDetail_BarberType">
+            <End Role="BarberType" EntitySet="BarberType" />
+            <End Role="BarberDetail" EntitySet="BarberDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BarberDetail_ShopDetail" Association="Self.FK_BarberDetail_ShopDetail">
+            <End Role="ShopDetail" EntitySet="ShopDetail" />
+            <End Role="BarberDetail" EntitySet="BarberDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SSGDataConnModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BarberDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="Int32" Nullable="false" />
+          <Property Name="EmailID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BarberTypeID" Type="Int32" />
+          <Property Name="ShopDetailID" Type="Int32" />
+          <NavigationProperty Name="BarberType" Relationship="Self.FK_BarberDetail_BarberType" FromRole="BarberDetail" ToRole="BarberType" />
+          <NavigationProperty Name="ShopDetail" Relationship="SSGDataConnModel.FK_BarberDetail_ShopDetail" FromRole="BarberDetail" ToRole="ShopDetail" />
+          <NavigationProperty Name="AppointmentDetails" Relationship="SSGDataConnModel.FK_AppointmentDetails_BarberDetail" FromRole="BarberDetail" ToRole="AppointmentDetail" />
+        </EntityType>
+        <EntityType Name="BarberType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BarberType1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BarberDetails" Relationship="Self.FK_BarberDetail_BarberType" FromRole="BarberType" ToRole="BarberDetail" />
+        </EntityType>
+        <EntityType Name="ServiceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AppointmentDetails" Relationship="SSGDataConnModel.FK_AppointmentDetails_ServiceDetail" FromRole="ServiceDetail" ToRole="AppointmentDetail" />
+        </EntityType>
+        <Association Name="FK_BarberDetail_BarberType">
+          <End Role="BarberType" Type="Self.BarberType" Multiplicity="0..1" />
+          <End Role="BarberDetail" Type="Self.BarberDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BarberType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BarberDetail">
+              <PropertyRef Name="BarberTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBContextEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BarberDetails" EntityType="Self.BarberDetail" />
+          <EntitySet Name="BarberTypes" EntityType="Self.BarberType" />
+          <EntitySet Name="ServiceDetails" EntityType="Self.ServiceDetail" />
+          <AssociationSet Name="FK_BarberDetail_BarberType" Association="Self.FK_BarberDetail_BarberType">
+            <End Role="BarberType" EntitySet="BarberTypes" />
+            <End Role="BarberDetail" EntitySet="BarberDetails" />
+          </AssociationSet>
+          <EntitySet Name="Status" EntityType="SSGDataConnModel.Status" />
+          <EntitySet Name="ShopDetails" EntityType="SSGDataConnModel.ShopDetail" />
+          <AssociationSet Name="FK_BarberDetail_ShopDetail" Association="SSGDataConnModel.FK_BarberDetail_ShopDetail">
+            <End Role="ShopDetail" EntitySet="ShopDetails" />
+            <End Role="BarberDetail" EntitySet="BarberDetails" />
+          </AssociationSet>
+          <EntitySet Name="TimeSlots" EntityType="SSGDataConnModel.TimeSlot" />
+          <EntitySet Name="AppointmentDetails" EntityType="SSGDataConnModel.AppointmentDetail" />
+          <AssociationSet Name="FK_AppointmentDetails_BarberDetail" Association="SSGDataConnModel.FK_AppointmentDetails_BarberDetail">
+            <End Role="BarberDetail" EntitySet="BarberDetails" />
+            <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_ServiceDetail" Association="SSGDataConnModel.FK_AppointmentDetails_ServiceDetail">
+            <End Role="ServiceDetail" EntitySet="ServiceDetails" />
+            <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_ShopDetail" Association="SSGDataConnModel.FK_AppointmentDetails_ShopDetail">
+            <End Role="ShopDetail" EntitySet="ShopDetails" />
+            <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_Status" Association="SSGDataConnModel.FK_AppointmentDetails_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointmentDetails_TimeSlot" Association="SSGDataConnModel.FK_AppointmentDetails_TimeSlot">
+            <End Role="TimeSlot" EntitySet="TimeSlots" />
+            <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <EntitySet Name="AppointServices" EntityType="SSGDataConnModel.AppointService" />
+          <AssociationSet Name="FK_AppointmentDetails_AppointService" Association="SSGDataConnModel.FK_AppointmentDetails_AppointService">
+            <End Role="AppointService" EntitySet="AppointServices" />
+            <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppointService_AppointmentDetails" Association="SSGDataConnModel.FK_AppointService_AppointmentDetails">
+            <End Role="AppointmentDetail" EntitySet="AppointmentDetails" />
+            <End Role="AppointService" EntitySet="AppointServices" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AppointmentDetails" Relationship="SSGDataConnModel.FK_AppointmentDetails_Status" FromRole="Status" ToRole="AppointmentDetail" />
+        </EntityType>
+        <EntityType Name="ShopDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShopName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int32" Nullable="false" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BarberDetails" Relationship="SSGDataConnModel.FK_BarberDetail_ShopDetail" FromRole="ShopDetail" ToRole="BarberDetail" />
+          <NavigationProperty Name="AppointmentDetails" Relationship="SSGDataConnModel.FK_AppointmentDetails_ShopDetail" FromRole="ShopDetail" ToRole="AppointmentDetail" />
+        </EntityType>
+        <Association Name="FK_BarberDetail_ShopDetail">
+          <End Type="SSGDataConnModel.ShopDetail" Role="ShopDetail" Multiplicity="0..1" />
+          <End Type="SSGDataConnModel.BarberDetail" Role="BarberDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShopDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BarberDetail">
+              <PropertyRef Name="ShopDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TimeSlot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AppointmentDetails" Relationship="SSGDataConnModel.FK_AppointmentDetails_TimeSlot" FromRole="TimeSlot" ToRole="AppointmentDetail" />
+        </EntityType>
+        <EntityType Name="AppointmentDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppointmentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Phone" Type="Int32" Nullable="false" />
+          <Property Name="BarberDetailID" Type="Int32" />
+          <Property Name="ShopDetailID" Type="Int32" />
+          <Property Name="ServiceDetailID" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AppointmentTime" Type="Time" Precision="7" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="TimeSlotID" Type="Int32" />
+          <Property Name="SlotStatus" Type="Boolean" />
+          <Property Name="AppointTime" Type="Int32" />
+          <Property Name="AppointServiceID" Type="Int32" />
+          <NavigationProperty Name="BarberDetail" Relationship="SSGDataConnModel.FK_AppointmentDetails_BarberDetail" FromRole="AppointmentDetail" ToRole="BarberDetail" />
+          <NavigationProperty Name="ServiceDetail" Relationship="SSGDataConnModel.FK_AppointmentDetails_ServiceDetail" FromRole="AppointmentDetail" ToRole="ServiceDetail" />
+          <NavigationProperty Name="ShopDetail" Relationship="SSGDataConnModel.FK_AppointmentDetails_ShopDetail" FromRole="AppointmentDetail" ToRole="ShopDetail" />
+          <NavigationProperty Name="Status" Relationship="SSGDataConnModel.FK_AppointmentDetails_Status" FromRole="AppointmentDetail" ToRole="Status" />
+          <NavigationProperty Name="TimeSlot" Relationship="SSGDataConnModel.FK_AppointmentDetails_TimeSlot" FromRole="AppointmentDetail" ToRole="TimeSlot" />
+          <NavigationProperty Name="AppointService" Relationship="SSGDataConnModel.FK_AppointmentDetails_AppointService" FromRole="AppointmentDetail" ToRole="AppointService" />
+          <NavigationProperty Name="AppointServices" Relationship="SSGDataConnModel.FK_AppointService_AppointmentDetails" FromRole="AppointmentDetail" ToRole="AppointService" />
+        </EntityType>
+        <Association Name="FK_AppointmentDetails_BarberDetail">
+          <End Type="SSGDataConnModel.BarberDetail" Role="BarberDetail" Multiplicity="0..1" />
+          <End Type="SSGDataConnModel.AppointmentDetail" Role="AppointmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BarberDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetail">
+              <PropertyRef Name="BarberDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_ServiceDetail">
+          <End Type="SSGDataConnModel.ServiceDetail" Role="ServiceDetail" Multiplicity="0..1" />
+          <End Type="SSGDataConnModel.AppointmentDetail" Role="AppointmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetail">
+              <PropertyRef Name="ServiceDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_ShopDetail">
+          <End Type="SSGDataConnModel.ShopDetail" Role="ShopDetail" Multiplicity="0..1" />
+          <End Type="SSGDataConnModel.AppointmentDetail" Role="AppointmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShopDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetail">
+              <PropertyRef Name="ShopDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_Status">
+          <End Type="SSGDataConnModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="SSGDataConnModel.AppointmentDetail" Role="AppointmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetail">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointmentDetails_TimeSlot">
+          <End Type="SSGDataConnModel.TimeSlot" Role="TimeSlot" Multiplicity="0..1" />
+          <End Type="SSGDataConnModel.AppointmentDetail" Role="AppointmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSlot">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetail">
+              <PropertyRef Name="TimeSlotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AppointService">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppoinmentID" Type="Int32" />
+          <Property Name="ApointServiceIDs" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AppointmentDetails" Relationship="SSGDataConnModel.FK_AppointmentDetails_AppointService" FromRole="AppointService" ToRole="AppointmentDetail" />
+          <NavigationProperty Name="AppointmentDetail" Relationship="SSGDataConnModel.FK_AppointService_AppointmentDetails" FromRole="AppointService" ToRole="AppointmentDetail" />
+        </EntityType>
+        <Association Name="FK_AppointmentDetails_AppointService">
+          <End Type="SSGDataConnModel.AppointService" Role="AppointService" Multiplicity="0..1" />
+          <End Type="SSGDataConnModel.AppointmentDetail" Role="AppointmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointService">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointmentDetail">
+              <PropertyRef Name="AppointServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppointService_AppointmentDetails">
+          <End Type="SSGDataConnModel.AppointmentDetail" Role="AppointmentDetail" Multiplicity="0..1" />
+          <End Type="SSGDataConnModel.AppointService" Role="AppointService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointmentDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AppointService">
+              <PropertyRef Name="AppoinmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SSGDataConnModelStoreContainer" CdmEntityContainer="DBContextEntities">
+          <EntitySetMapping Name="BarberDetails">
+            <EntityTypeMapping TypeName="SSGDataConnModel.BarberDetail">
+              <MappingFragment StoreEntitySet="BarberDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="BarberTypeID" ColumnName="BarberTypeID" />
+                <ScalarProperty Name="ShopDetailID" ColumnName="ShopDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BarberTypes">
+            <EntityTypeMapping TypeName="SSGDataConnModel.BarberType">
+              <MappingFragment StoreEntitySet="BarberType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BarberType1" ColumnName="BarberType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceDetails">
+            <EntityTypeMapping TypeName="SSGDataConnModel.ServiceDetail">
+              <MappingFragment StoreEntitySet="ServiceDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="SSGDataConnModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Status1" ColumnName="Status" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShopDetails">
+            <EntityTypeMapping TypeName="SSGDataConnModel.ShopDetail">
+              <MappingFragment StoreEntitySet="ShopDetail">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeSlots">
+            <EntityTypeMapping TypeName="SSGDataConnModel.TimeSlot">
+              <MappingFragment StoreEntitySet="TimeSlot">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppointmentDetails">
+            <EntityTypeMapping TypeName="SSGDataConnModel.AppointmentDetail">
+              <MappingFragment StoreEntitySet="AppointmentDetails">
+                <ScalarProperty Name="AppointServiceID" ColumnName="AppointServiceID" />
+                <ScalarProperty Name="AppointTime" ColumnName="AppointTime" />
+                <ScalarProperty Name="SlotStatus" ColumnName="SlotStatus" />
+                <ScalarProperty Name="TimeSlotID" ColumnName="TimeSlotID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="AppointmentTime" ColumnName="AppointmentTime" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceDetailID" ColumnName="ServiceDetailID" />
+                <ScalarProperty Name="ShopDetailID" ColumnName="ShopDetailID" />
+                <ScalarProperty Name="BarberDetailID" ColumnName="BarberDetailID" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppointServices">
+            <EntityTypeMapping TypeName="SSGDataConnModel.AppointService">
+              <MappingFragment StoreEntitySet="AppointService">
+                <ScalarProperty Name="ApointServiceIDs" ColumnName="ApointServiceIDs" />
+                <ScalarProperty Name="AppoinmentID" ColumnName="AppoinmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
